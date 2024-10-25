@@ -1,0 +1,40 @@
+<div class="filtros">
+  <mat-form-field appearance="fill">
+    <mat-label>Buscar por nombre</mat-label>
+    <input matInput placeholder="Nombre del estudiante" [formControl]="filtroNombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Estado</mat-label>
+    <mat-select [formControl]="filtroEstado">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="Aprobado">Aprobado</mat-option>
+      <mat-option value="Suspenso">Suspenso</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<table mat-table [dataSource]="estudiantesFiltrados" class="mat-elevation-z8">
+  <!-- Columna Nombre -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.nombre}} </td>
+  </ng-container>
+
+  <!-- Columna Nota -->
+  <ng-container matColumnDef="nota">
+    <th mat-header-cell *matHeaderCellDef> Nota </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.nota}} </td>
+  </ng-container>
+
+  <!-- Columna Estado -->
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef> Estado </th>
+    <td mat-cell *matCellDef="let estudiante"> {{ getEstado(estudiante.nota) }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['nombre', 'nota', 'estado']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['nombre', 'nota', 'estado']"></tr>
+</table>
+
+<button mat-raised-button color="primary" (click)="agregarEstudiante()">Añadir Estudiante</button>
